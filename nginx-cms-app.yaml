@@ -59,4 +59,16 @@ spec:
   tls:
       - hosts:
           - nginx-cms-app.com
-        secretName: nginx-cms-tls 
+        secretName: nginx-cms-tls
+ 
+ ---
+ apiVersion: v1
+kind: Secret
+metadata:
+  name: nginx-cms-tls
+  namespace: dev-poc-namespace 
+data:
+  tls.crt: nginx-cms-app.com.crt
+  tls.key: nginx-cms-app.com.key
+type: kubernetes.io/tls
+
