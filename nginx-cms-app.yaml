@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-cms-deployment
+  namespace: dev-poc-namespace
+  labels:
+    app: nginx-cms
+    type: web 
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: nginx-cms
+      type: web
+  template:
+    metadata:
+      labels:
+        app: nginx-cms
+        type: web
+    spec:
+      containers:
+      - name: nginx-cms
+        image: comp.private.registry.com/dev-poc/nginx-cms-poc:001
+        imagePullPolicy: Always 
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-cms-service
+spec:
+  selector:
+    app: nginx-cms
+  ports:
+    - protocol: TCP
+      port: 80 
+  type: LoadBalancer
