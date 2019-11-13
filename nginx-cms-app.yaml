@@ -62,7 +62,7 @@ spec:
         secretName: nginx-cms-tls
  
  ---
- apiVersion: v1
+apiVersion: v1
 kind: Secret
 metadata:
   name: nginx-cms-tls
