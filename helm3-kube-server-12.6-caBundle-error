@@ -1,0 +1,34 @@
+root@desktop-:~/github/nginx-app# kubectl version
+Client Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.0", GitCommit:"e8462b5b5dc2584fdcd18e6bcfe9f1e4d970a529", GitTreeState:"clean", BuildDate:"2019-06-19T16:40:16Z", GoVersion:"go1.12.5", Compiler:"gc", Platform:"linux/amd64"}
+Server Version: version.Info{Major:"1", Minor:"12", GitVersion:"v1.12.4", GitCommit:"f49fa022dbe63faafd0da106ef7e05a29721d3f1", GitTreeState:"clean", BuildDate:"2018-12-14T06:59:37Z", GoVersion:"go1.10.4", Compiler:"gc", Platform:"linux/amd64"}
+
+root@desktop:~/github/nginx-app# kubectl create namespace cert-manager
+namespace/cert-manager created
+
+root@desktop:~/github/nginx-app# kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.11/deploy/manifests/00-crds.yaml
+customresourcedefinition.apiextensions.k8s.io/challenges.acme.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/orders.acme.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/certificaterequests.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/certificates.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/clusterissuers.cert-manager.io created
+customresourcedefinition.apiextensions.k8s.io/issuers.cert-manager.io created
+
+root@desktop:~/github/nginx-app# helm repo add jetstack https://charts.jetstack.io
+"jetstack" has been added to your repositories
+root@arun-desktop-e470:~/github/nginx-app-cms/nginx-app# helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "appscode" chart repository
+...Successfully got an update from the "nginx-stable" chart repository
+...Successfully got an update from the "jetstack" chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈ Happy Helming!⎈ 
+
+root@desktop:~/github/nginx-app# helm install \
+>   --generate-name \
+>   --namespace cert-manager \
+>   --version v0.11.0 \
+>   jetstack/cert-manager
+Error: unable to build kubernetes objects from release manifest: error validating "": error validating data: ValidationError(MutatingWebhookConfiguration.webhooks[0].clientConfig): missing required field "caBundle" in io.k8s.api.admissionregistration.v1beta1.WebhookClientConfig
+
+root@desktop:~/github/nginx-app# helm version
+version.BuildInfo{Version:"v3.0.0-rc.2", GitCommit:"82ea5aa774661cc6557cb57293571d06f94aff0c", GitTreeState:"clean", GoVersion:"go1.13.3"}
