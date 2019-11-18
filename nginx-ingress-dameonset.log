@@ -1,0 +1,41 @@
+deployments# kubectl describe daemonset.apps/nginx-ingress -n nginx-ingress
+Name:           nginx-ingress
+Selector:       app=nginx-ingress
+Node-Selector:  <none>
+Labels:         <none>
+Annotations:    deprecated.daemonset.template.generation: 1
+Desired Number of Nodes Scheduled: 0
+Current Number of Nodes Scheduled: 0
+Number of Nodes Scheduled with Up-to-date Pods: 0
+Number of Nodes Scheduled with Available Pods: 0
+Number of Nodes Misscheduled: 0
+Pods Status:  0 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:           app=nginx-ingress
+  Service Account:  nginx-ingress
+  Containers:
+   nginx-ingress:
+    Image:       private.registry.corp/company-dev-poc/nginx/nginx-ingress:edge
+    Ports:       80/TCP, 443/TCP
+    Host Ports:  80/TCP, 443/TCP
+    Args:
+      -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
+      -default-server-tls-secret=$(POD_NAMESPACE)/default-server-secret
+    Environment:
+      POD_NAMESPACE:   (v1:metadata.namespace)
+      POD_NAME:        (v1:metadata.name)
+    Mounts:           <none>
+  Volumes:            <none>
+Events:
+  Type     Reason        Age                From                  Message
+  ----     ------        ----               ----                  -------
+  Warning  FailedCreate  71s                daemonset-controller  Error creating: pods "nginx-ingress-8g6h2" is forbidden: SecurityContext.RunAsUser is forbidden
+  Warning  FailedCreate  71s                daemonset-controller  Error creating: pods "nginx-ingress-g8gm8" is forbidden: SecurityContext.RunAsUser is forbidden
+  Warning  FailedCreate  71s                daemonset-controller  Error creating: pods "nginx-ingress-sfxbc" is forbidden: SecurityContext.RunAsUser is forbidden
+  Warning  FailedCreate  71s                daemonset-controller  Error creating: pods "nginx-ingress-fw7kz" is forbidden: SecurityContext.RunAsUser is forbidden
+  Warning  FailedCreate  71s                daemonset-controller  Error creating: pods "nginx-ingress-w92c8" is forbidden: SecurityContext.RunAsUser is forbidden
+  Warning  FailedCreate  71s                daemonset-controller  Error creating: pods "nginx-ingress-dj24q" is forbidden: SecurityContext.RunAsUser is forbidden
+  Warning  FailedCreate  71s                daemonset-controller  Error creating: pods "nginx-ingress-bvgck" is forbidden: SecurityContext.RunAsUser is forbidden
+  Warning  FailedCreate  71s                daemonset-controller  Error creating: pods "nginx-ingress-9lqnj" is forbidden: SecurityContext.RunAsUser is forbidden
+  Warning  FailedCreate  70s                daemonset-controller  Error creating: pods "nginx-ingress-zz9dr" is forbidden: SecurityContext.RunAsUser is forbidden
+  Warning  FailedCreate  30s (x5 over 69s)  daemonset-controller  (combined from similar events): Error creating: pods "nginx-ingress-lbzbt" is forbidden: SecurityContext.RunAsUser is forbidden
